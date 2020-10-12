@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+  int n,k;
+  string s;
+  cout<<"enter string :";
+  cin>>s;
+  cout<<"enter number of normal char:";
+  cin>>n;
+  cout<<"enter all normal characters:\n";
+  unordered_map<char,int>mp;
+  for(int i=0;i<n;i++)
+  {
+    char c;
+    cin>>c;
+    mp[c]=1;
+  }
+  cout<<"enter number of allowed normal char \n";
+  cin>>k;
+  int len=0;
+  int count=0;
+  int l=0,r=0;
+  while(r<s.size())
+  {
+    if(mp[s[r]]>0)
+    count++;
+    if(count<=k)
+      len=max(len,r-l+1);
+    else
+    {
+      while(l<r && count>k)
+      {
+        if(mp[s[l]]>0) count--;
+        l++;
+      }
+    }
+    r++;
+  }
+  cout<<"ans= "<<len<<endl;
+  return 0;
+}

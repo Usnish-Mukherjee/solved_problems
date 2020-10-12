@@ -1,0 +1,26 @@
+#include<iostream>
+#include<sstream>
+using namespace std;
+int main()
+{
+  string s;
+  getline(cin,s);
+  stringstream ss(s);
+  string temp;
+  int max_len=0;
+  string ans;
+  while(ss>>temp)
+  {
+    int n=temp.size();
+    if(n%2==0)
+    {
+      if(n>max_len)
+      {
+        max_len=n;
+        ans=temp;
+      }
+    }
+  }
+  cout<<"Longest even length word is: "<<ans;
+  cout<<endl;
+}

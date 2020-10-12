@@ -1,0 +1,55 @@
+#include<bits/stdc++.h>
+using namespace std;
+int dfs(vector<vector<int>> &adj,int i,int j,vector<vector<bool>>v,unordered_map<int,int> mp,int depth)
+{
+	if(i<0 ||i>=adj.size()||j<0 || j>=adj[0].size()|| v[i][j])
+	return depth-1;
+	v[i][j]=true;
+	 
+	mp[adj[i][j]]++;
+	if(mp.size()<=2)
+    {
+	int a=dfs(adj,i+1,j,v,mp,depth+1);
+	int b=dfs(adj,i-1,j,v,mp,depth+1);
+	   
+	int c=dfs(adj,i,j-1,v,mp,depth+1);
+	 
+	int d=dfs(adj,i,j+1,v,mp,depth+1);
+	   
+	
+	return max(a,max(b,max(c,d)));
+    }
+    else 
+    {
+      return depth-1;
+    }
+	
+	
+}
+int main()
+{
+	int m,n;
+	cin>>m>>n;
+	vector<vector<int>>adj(m,vector<int>(n,0)),dp(m,vector<int>(n,0));
+	for(int i=0;i<m;i++ )
+	{
+		for(int j=0;j<n;j++)
+		{
+			int color;
+			cin>>color;
+			adj[i][j]=color;
+		}
+	}
+	int ans=0;
+
+	for(int i=0;i<m;i++)
+	{
+		for(int j=0;j<n;j++)
+		{
+        	unordered_map<int,int>mp;
+        	vector<vector<bool>> visited(m,vector<bool>(n,false));
+			ans=max(ans,dfs(adj,i,j,visited,mp,1));
+		}
+	}
+	cout<<ans<<endl;
+}

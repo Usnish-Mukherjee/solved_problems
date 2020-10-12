@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+using namespace std;
+void find(string s,int* w, int* b)
+{
+  int count=0;
+  for(int i=0;i<s.size()-2;i++)
+  {
+    string t=s.substr(i,3);
+    cout<<t<<endl;
+    if(t=="www")
+    w++;
+    else if(t=="bbb")
+    b++;
+    else continue;
+  }
+  return ;
+}
+int main()
+{
+  string s;
+  cout<<"\tEnter the string\n\t";
+  cin>>s;
+  int count_w=0;
+  int count_b=0;
+  find(s,&count_w,&count_b);
+  if(count_w>count_b)
+   cout<<"\tWindy is winner\n";
+  else
+   cout<<"\tBob is winner\n";
+  cout<<endl;
+  return 0;
+}

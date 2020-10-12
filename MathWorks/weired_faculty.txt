@@ -1,0 +1,55 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+  int t;
+  cin>>t;
+  while(t--){
+  cout<<"enter n:\t\n";
+  int n;
+  cin>>n;
+  int a[n];
+  cout<<"enter values:\t\n";
+  for(int i=0;i<n;i++)
+  cin>>a[i];
+
+  int total=0;
+  for(int i=0;i<n;i++)
+  {
+    total+=a[i];
+  }
+  int my_ones=0,my_zeros=0;
+  int friend_ones=total-my_ones;
+  int friend_zeros=n-total;
+  int my_score=my_ones-my_zeros;
+  int friend_score=friend_ones-friend_zeros;
+    if(my_score>friend_score) {
+      cout<<0;
+      //return 0;
+    }
+  else{
+   int f=0;
+  for(int i=0;i<n;i++)
+  {
+    if(a[i]==1)
+    {
+      my_ones++;
+      friend_ones--;
+    }else
+    {
+      my_zeros++;
+      friend_zeros--;
+    }
+      my_score=my_ones-my_zeros;
+     friend_score=friend_ones-friend_zeros;
+      if(my_score>friend_score){
+         cout<<i+1<<endl;
+         f=1;
+         break;
+       }
+  }
+  if(f==0) cout<<"Not possible"<<endl;
+}
+}
+  return 0;
+}

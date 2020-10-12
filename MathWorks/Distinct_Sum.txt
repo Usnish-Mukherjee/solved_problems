@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n,k;
+    cout<<"enter n"<<endl;
+    cin>>n;
+    cout<<"enter sum \n";
+    cin>>k;
+    cout<<"enter elements \n";
+    int a[n];
+    unordered_map<int,int>mp;
+    for(int i=0;i<n;i++)
+    {
+       int x; cin>>x;
+        a[i]=x;
+      //  mp[a[i]]=i+1;
+    }
+    int count=0;
+    for(int i=0;i<n;i++)
+    {
+        if(mp[a[i]]!=-1 && mp.find(k-a[i])!=mp.end()&& mp[k-a[i]]!=i+1)
+        {
+            if(mp[k-a[i]]!=-1)
+            {
+              count++;
+              mp[k-a[i]]=-1;
+            }
+        }
+        if(mp[a[i]]!=-1)
+        mp[a[i]]=i+1;
+    }
+    cout<<"ans="<<count<<endl;
+
+}

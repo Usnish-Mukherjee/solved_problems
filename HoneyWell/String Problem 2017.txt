@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std;
+int ans;
+void find(string s,int l,int r,vector<vector<int>>& v)
+{
+  for(int i=0;i<26;i++)
+  {
+    auto first=lower_bound(v[i].begin(),v[i].end(),l);
+    if(first!=v[i].end()&& *first<=r)
+    ans++;
+  }
+}
+int main() {
+  string s;
+  cin>>s;
+  int n=s.size();
+  vector<vector<int>>v(26);
+  for(int i=0;i<n;i++)
+  {
+    v[s[i]-'a'].push_back(i);
+  }
+  int q;
+  cout<<"Enter number of query\t\n";
+  cin>>q;
+
+  for(int i=0;i<q;i++)
+  {
+    int l,r;
+    cout<<"Enter "<<i<<"th query\t\n";
+    cout<<"L: ";
+    cin>>l;
+    cout<<"R: ";
+    cin>>r;
+    ans=0;
+    find(s,l,r,v);
+    cout<<ans<<endl;
+  }
+//  cout<<endl;
+  return 0;
+}
