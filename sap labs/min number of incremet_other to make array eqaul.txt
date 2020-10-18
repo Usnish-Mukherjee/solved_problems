@@ -1,0 +1,19 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+	int n;
+	cin>>n;
+	int a[n];
+	int smallest=99999,sum=0,ans=0;
+	for(int i=0;i<n;i++)
+	{
+	    cin>>a[i];
+	    smallest=min(smallest,a[i]);
+	}
+	for(int i=0;i<n;i++)
+	{
+	    sum+=a[i]-smallest;
+	}
+	cout<<"Min operation needed is "<<sum<<endl;
+}

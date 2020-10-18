@@ -1,0 +1,87 @@
+#include<bits/stdc++.h>
+using namespace std;
+int find(int node,vector<int>& parent)
+{
+  int root=node;
+  while(node!=parent[node])
+  {
+    node=parent[node];
+  }
+  while(root!=node)
+  {
+    int temp=parent[root];
+    parent[root]=node;
+    root=temp;
+  }
+  return node;
+}
+void unify(int p,int q,vector<int>& parent,vector<int>& size)
+{
+  int root1=find(p,parent);
+  int root2=find(q,parent);
+  if(root1==root2) return;
+  if(size[root1]<size[root2])
+  {
+    parent[root1]=root2;
+    size[root2]+=size[root1];
+  }
+  else
+  {
+    parent[root2]=root1;
+    size[root1]+=size[root2];
+  }
+  return;
+}
+void findRoutes(int n,int g,int d1,int* org,int d2,int* dest)
+{
+  vector<int> parent(n),size(n);
+  for(int i=0;i<n;i++)
+  {
+    size[i]=1;
+    parent[i]=i;
+  }
+  for(int k=g+1;k<=n;k++)
+  {
+    for(int x=2*k;x<=n;x+=k)
+    {
+      unify(x-1,x-k-1,parent,size);
+    }
+  }
+  bool ans[d1]={false};
+  for(int i=0;i<d1;i++)
+  {
+    if(parent[org[i]-1]==parent[dest[i]-1])
+    ans[i]=true;
+  //  if((find(org[i]-1,parent))==(find(dest[i]-1,parent)))
+
+  }
+  for(int i=0;i<d1;i++)
+  cout<<ans[i]<<' ';
+}
+
+int main()
+{
+  int n;
+  cout<<"Enter number of cities: ";
+  cin>>n;
+  int g;
+  cout<<"Enter threshold: ";
+  cin>>g;
+  int d1;
+  cout<<"Enter number of origin cities: ";
+  cin>>d1;
+  cout<<"Enter origin cities: ";
+  int org[d1];
+  for(int i=0;i<d1;i++)
+  cin>>org[i];
+  int  d2;
+  cout<<"Enter number of destination cities: ";
+  cin>>d2;
+  int dest[d2];
+  cout<<"Enter destination cities: ";
+  for(int i=0;i<d2;i++)
+  cin>>dest[i];
+  findRoutes(n,g,d1,org,d2,dest);
+  return 0;
+
+}
