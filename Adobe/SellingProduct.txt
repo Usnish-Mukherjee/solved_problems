@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+using namespace std;
+int deleteIds(vector<int>& v,int m)
+{
+  unordered_map<int,int>mp;
+  priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>q;
+  for(int i=0;i<v.size();i++)
+    mp[v[i]]++;
+  for(auto i:mp)
+    q.push({i.second,i.first});
+ while(!q.empty())
+ {
+   if(m<=0)break;
+   int n=q.top().first;
+   int ele=q.top().second;
+   if(n<=m) {
+     q.pop();
+   }
+   else if(n>m)
+   {
+     q.pop();
+     q.push({n-m,ele});
+   }
+   m-=n;
+ }
+ return q.size();
+}
+int main()
+{
+  int n,m;
+  cout<<"enter number of ids:\n";
+  cin>>n;
+  cout<<"enter ids:\n";
+  std::vector<int> v(n);
+  for(int i=0;i<n;i++)
+  {
+    int x; cin>>x;
+    v[i]=x;
+  }
+  cout<<"Enter m,number of ids to be deleteed:\n";
+  cin>>m;
+  cout<<"result:"<<deleteIds(v,m);
+  return 0;
+}

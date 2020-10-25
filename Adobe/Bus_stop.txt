@@ -1,0 +1,34 @@
+#include<iostream>
+
+using namespace std;
+int main()
+{
+  int n,sum=0;
+  cout<<"Enter number of bus stop:\n";
+  cin>>n;
+  int a[n];
+  cout<<"Enter cost array:\n";
+  for(int i=0;i<n;i++)
+  {
+    cin>>a[i];
+    sum+=a[i];
+  }
+  int ans=0;
+  for(int i=0;i<n;i++)
+  {
+    int j=(i+1)%n;
+    int left=0;
+    int right=sum;
+    int temp=0;
+    while(j!=i)
+    {
+      left+=a[(j-1)%n];
+      right-=a[(j-1)%n];
+     temp=min(left,right);
+     ans=max(ans,temp);
+     j=(j+1)%n;
+    }
+  }
+  cout<<ans<<endl;
+  return 0;
+}

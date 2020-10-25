@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+   #define mod 1000000007
+   using namespace std;
+
+   int solve(int wordLen, int maxVowels){
+       long long dp[wordLen+1][2];
+
+       dp[0][1] = dp[0][0] = 1;
+       dp[1][1] = 21;
+       dp[1][0]  = 5;
+
+       for(int i  = 2;i<=wordLen;i++){
+         if(maxVowels==0)
+         {
+           dp[i][1]=pow(21,i);
+           dp[i][0]=0;
+           continue;
+         }
+
+
+           dp[i][1] = (21*(dp[i-1][1]+dp[i-1][0])%mod)%mod;
+           dp[i][0] = 0;
+          /* int k=maxVowels;
+           int p=5;
+           for(int j=1;i>j && j<=k;j++)
+           {
+             dp[i][0]=(dp[i][0]+(p*dp[i-j][1])%mod)%mod;
+             p=(p*5)%mod;
+           }
+           */
+           int k  = i, j = 1, p = 5;
+          dp[i][0] = 0;
+
+          while(k>0 && j<=maxVowels){
+              dp[i][0] = (dp[i][0] + (p*dp[i-j][1])%mod)%mod;
+              p = (p*5)%mod;
+              k--;
+              j++;
+          }
+       }
+
+       return (int)(dp[wordLen][0]+dp[wordLen][1])%mod;
+   }
+
+   int main(){
+       int n,k;
+       cin>>n>>k;
+       cout<<solve(n, k);
+       return 0;
+   }

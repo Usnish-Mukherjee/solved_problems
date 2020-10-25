@@ -1,0 +1,68 @@
+#include<iostream>
+#include<cstring>
+#include<vector>
+using namespace std;
+void zAlgo(string s,vector<int>& z)
+{
+  int l,r,k;
+  l=r=0;
+  z[0]=0;
+  for(int i=1;i<s.size();i++)
+  {
+    if(i>r)
+    {
+      l=r=i;
+      while(r<s.size() && s[r-l]==s[r])
+      r++;
+      z[i]=r-l;
+      r--;
+    }
+    else
+    {
+      k=i-l;
+      if(z[k]<r-i+1)
+      z[i]=z[k];
+      else
+      {
+        l=i;
+        while(r<s.size() && s[r-l]==s[r])
+        r++;
+        z[i]=r-l;
+        r--;
+
+      }
+    }
+  }
+}
+void find(string s,string s1,string s2)
+{
+  int p=s1.size();
+  int q=s2.size();
+  s1=s1+'&'+s;
+  s2=s2+'&'+s;
+  int n1=s1.size();
+  int n2=s2.size();
+  vector<int> z1(n1),z2(n2);
+  zAlgo(s1,z1);
+  zAlgo(s2,z2);
+  int count=0;
+  int ans=0;
+  for(int i=0;i<s.size();i++)
+  {
+    if(z1[i+p+1]==p)
+    count++;
+    if(z2[i+q+1]==q)
+    ans+=count;
+  }
+  cout<<ans<<endl;
+}
+int main()
+{
+  string s1,s2;
+  cin>>s1>>s2;
+  int i=s2.find('*');
+  string prefix=s2.substr(0,i);
+  string suffix=s2.substr(i+1);
+  find(s1,prefix,suffix);
+  return 0;
+}
