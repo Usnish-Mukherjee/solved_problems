@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int maxPerk(int catridges,int dollars,int recycleReward,int perkCost){
+    // for(int i=catridges;i>=0;i--){
+    //     if(i*perkCost<=dollars)
+    //         return i;
+    //     else{
+    //         dollars+=recycleReward;
+    //     }
+    // }
+    int start=0, end=catridges, idx=-1;
+    while(start<=end){
+        int mid=start+(end-start)/2;
+        int curr_dollars=dollars+recycleReward*(catridges-mid);
+        if(mid*perkCost<=curr_dollars){
+            idx=mid;
+            start=mid+1;
+        }
+        else{
+            end=mid-1;
+        }
+    }
+    return idx;
+}
+
+int main() {
+	int catridges, dollars, recycleReward, perkCost;
+	cin>>catridges>>dollars>>recycleReward>>perkCost;
+	
+	cout<<maxPerk(catridges, dollars, recycleReward, perkCost)<<endl;
+	return 0;
+}

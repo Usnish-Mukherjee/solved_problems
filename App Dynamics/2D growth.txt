@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+  int n;
+  cout<<"Enter number of inputs:\n";
+  cin>>n;
+  vector<int>v1(n);
+  vector<int>v2(n);
+  cout<<"Enter inputs, of the form a , b\n";
+  int x=INT_MAX,y=INT_MAX;
+  for(int i=0;i<n;i++)
+  {
+    int a,b;
+    cin>>a>>b;
+    v1[i]=a;
+    v2[i]=b;
+    x=min(x,a);
+    y=min(y,b);
+  }
+  cout<<"ans = "<<x*y<<endl;
+  return 0;
+}

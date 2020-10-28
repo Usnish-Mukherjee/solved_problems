@@ -1,0 +1,65 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define MAX 2*pow(10,5)+1
+
+vector<int> prime(MAX);
+unordered_map<int, int> mp;
+void sieve(){
+    prime[1]=1;
+    for(int i=2;i<MAX;i++){
+        prime[i]=i;
+    }
+    for(int i=4;i<MAX;i+=2){
+        prime[i]=2;
+    }
+    for(int i=3;i*i<MAX;i++){
+        if(prime[i]==i){
+            for(int j=i*i;j<MAX;j+=i){
+                if(prime[j]==j)
+                    prime[j]=i;
+            }
+        }
+    }
+}
+void primeFactor(int n){
+    set<int> s;
+    while(n!=1){
+        s.insert(prime[n]);
+        n=n/prime[n];
+    }
+    for(auto x: s)
+        mp[x]++;
+}
+void switching(vector<int> &states){
+    for(auto x: mp){
+        
+        if(x.second %2==0)
+            continue;
+        cout<<x.first<<endl;
+        int i=x.first;
+        for(int k=i;k<states.size();k+=i)
+            states[k]=1-states[k];
+    }
+    for(int i=1;i<states.size();i++)
+        cout<<states[i]<<" ";
+    cout<<endl;
+}
+int main() {
+    mp.clear();
+	
+	int n,m;
+	cin>>n>>m;
+	vector<int> states(n+1,-1);
+	vector<int> numbers(m);
+	for(int i=1;i<=n;i++)
+	    cin>>states[i];
+	for(int j=0;j<m;j++)
+	    cin>>numbers[j];
+	
+	sieve();
+	for(int i=0;i<m;i++){
+	    primeFactor(numbers[i]);
+	}
+	switching(states);
+	return 0;
+}
