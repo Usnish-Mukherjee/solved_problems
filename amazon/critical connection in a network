@@ -1,0 +1,49 @@
+vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
+        vector<vector<int>>adj(n);
+        for(auto edge:connections)
+        {
+            adj[edge[0]].push_back(edge[1]);
+            adj[edge[1]].push_back(edge[0]);
+        }
+        vector<int>low(n);
+        vector<int>ids(n);
+        vector<bool>visited(n,false);
+        vector<vector<int>>ans;
+        for(int i=0;i<n;i++)
+        {
+            low[i]=i;
+            ids[i]=i;
+        }
+        for(int i=0;i<adj.size();i++)
+        {
+            if(!visited[i])
+                dfs(adj,i,-1,visited,ids,low,0,ans);
+        }
+        return ans;
+        
+    }
+    void dfs(vector<vector<int>>& adj,int at,int parent,vector<bool> &visited,
+             vector<int>& ids,vector<int>& low,int id,vector<vector<int>>&ans)
+    {
+        if(!visited[at])
+        {
+            visited[at]=true;
+            low[at]=id;
+            ids[at]=id;
+            id++;
+            for(auto to:adj[at])
+            {
+                if(parent==to) continue;
+                if(!visited[to])
+                {
+                    dfs(adj,to,at,visited,ids,low,id,ans);
+                    low[at]=min(low[to],low[at]);
+                    if(low[to]>ids[at])
+                        ans.push_back({to,at});
+                }
+                else
+                    low[at]=min(low[at],ids[to]);
+            }
+        }
+    }
+    }
