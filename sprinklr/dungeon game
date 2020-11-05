@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+int calculateMinimumHP(vector<vector<int>>& dungeon) {
+       int M = dungeon.size();
+       int N = dungeon[0].size();
+       // hp[i][j] represents the min hp needed at position (i, j)
+       // Add dummy row and column at bottom and right side
+       vector<vector<pair<int,int > > > hp(M + 1, vector<pair<int,int>>(N + 1, {INT_MAX,0}));
+       hp[M][N - 1] = {1,-1};
+       hp[M - 1][N] = {1,-1};
+       for (int i = M - 1; i >= 0; i--) {
+           for (int j = N - 1; j >= 0; j--) {
+              /* int need = min(hp[i + 1][j], hp[i][j + 1]) - dungeon[i][j];
+               hp[i][j] = need <= 0 ? 1 : need;*/
+               pair<int,int>need;
+               if(hp[i+1][j].first<=hp[i][j+1].first)
+                 need=hp[i+1][j];
+               else
+               need=hp[i][j+1];
+               need.first-=dungeon[i][j];
+               if(need.first<=0)
+               need.first=1;
+               need.second++;
+               hp[i][j]=need;
+           }
+       }
+       return hp[0][0].first+hp[0][0].second;
+   }
+   int main()
+   {
+     int n;
+     cin>>n;
+     vector<vector<int>>a(n,vector<int>(n));
+     for(int i=0;i<n;i++)
+     {
+       for(int j=0;j<n;j++)
+       {
+         cin>>a[i][j];
+       }
+     }
+     cout<<calculateMinimumHP(a);
+   }
