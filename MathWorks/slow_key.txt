@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+char slowKey(vector<vector<int>>v)
+{
+	int n=v.size();
+	unordered_map<int,int>mp;
+	priority_queue<pair<int,int>>q;
+	q.push({v[0][1],v[0][0]});
+	mp[v[0][0]]=v[0][1];
+	for(int i=1;i<n;i++)
+	{
+		int x=v[i][1]-v[i-1][1];
+		if(mp.find(v[i][0])!=mp.end() && mp[v[i][0]]>=x)
+		continue;
+		q.push({x,v[i][0]});
+		mp[v[i][0]]=x;
+	}
+	return q.top().second +'a';
+}
+int main()
+{
+	int n;
+	cin>>n;
+	vector<vector<int>>v(n,vector<int>(2));
+	for(int i=0;i<n;i++)
+	{
+		cin>>v[i][0]>>v[i][1];
+	}
+	cout<<slowKey(v);
+	return 0;
+}
