@@ -1,0 +1,26 @@
+typedef tuple<int,int,int>ti;
+int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int K) {
+       vector<vector<pair<int,int>>> adj(n);
+        for(auto flight:flights)
+            adj[flight[0]].push_back({flight[1],flight[2]});
+        priority_queue<ti,vector<ti>,greater<ti>>q;
+        
+        q.push({0,src,K+1});
+        while(!q.empty())
+        {
+            auto [cost,u,stop]=q.top();
+            q.pop();
+            if(u==dst)
+                return cost;
+            if(stop==0)continue;
+            for(auto to:adj[u])
+            {
+                auto [v,w]=to;
+                q.push({cost+w,v,stop-1});
+            }
+            
+        }
+        
+        return -1;
+        
+    }
