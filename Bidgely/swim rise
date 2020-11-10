@@ -1,0 +1,52 @@
+//Swim in Rising water //Leetcode Discuss
+class Solution {
+public:
+    int n;
+    
+    vector<int> x = {0, 1, 0, -1};
+    vector<int> y = {1, 0, -1, 0};
+    
+    vector<vector<bool>> vis;
+    
+    int res;
+    
+    bool dfs(int r, int c, vector<vector<int>> &grid, int val){
+        if(r == n-1 && c == n-1){
+            return true;
+        }
+        vis[r][c] = true;
+        
+        for(int i = 0; i < 4; i++){
+            int xx = r + x[i];
+            int yy = c + y[i];
+            
+            if(xx >= 0 && xx < n && yy >= 0 && yy < n && !vis[xx][yy] && grid[xx][yy] <= val){
+                if(dfs(xx, yy, grid, val)) return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    bool helper(int val, vector<vector<int>> &grid){
+        vis.clear();
+        vis.resize(n, vector<bool>(n, 0));
+        
+        return val >= grid[0][0] ? dfs(0, 0, grid, val) : false;
+    }
+    int swimInWater(vector<vector<int>>& grid) {
+        n = grid.size();
+        
+        int lo = 0, hi = n*n-1;
+        
+        while(lo < hi){
+            int mid = (lo + hi) / 2;
+            bool val = helper(mid, grid);
+            if(val) hi = mid;
+            else lo = mid+1;
+        }
+        
+        return lo;
+        
+    }
+};
