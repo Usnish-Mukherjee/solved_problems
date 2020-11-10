@@ -1,0 +1,16 @@
+
+int score(string S)
+{
+        int ans=0,res=0,m=1;
+        for(int i=0;i<S.size();i++)
+        {
+            if(S[i]=='(')
+              ans++;
+            else{
+                ans--;
+                if(S[i-1]=='(')
+                    res+=1<<ans;
+            }
+        }
+        return res;
+}
