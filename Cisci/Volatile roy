@@ -1,0 +1,77 @@
+#include <stdio.h>
+
+int f,r;
+int q[362880/2];
+char d[98765432];
+int c;
+int board[3*3];
+
+int prime(int x){
+    if(x==3||x==5||x==7||x==11||x==13||x==17)
+    return 1;
+    return 0;
+}
+
+int powe(int n){
+    int ans=1;
+    for(int i=0;i<n;i++){
+        ans = ans*10;
+    }
+    return ans;
+}
+
+void swap(int i,int j){
+    int de = board[j]-board[i];
+    int ns = c + de*powe(8-i)- de*powe(8-j);
+    if(d[ns/10]==0){
+        d[ns/10] = d[c/10] + 1;
+        q[r++] = ns;
+    }
+}
+
+void create(){
+    int s;
+    f=0;
+    while(f<r){
+        s = c = q[f];
+        for(int i=8;i>=0;i--){
+            board[i] = s%10;
+            s = s/10;
+        }
+        if(prime(board[0]+board[1])) swap(0,1);
+        if(prime(board[0]+board[3])) swap(0,3);
+        if(prime(board[1]+board[2])) swap(1,2);
+        if(prime(board[1]+board[4])) swap(1,4);
+        if(prime(board[2]+board[5])) swap(2,5);
+        if(prime(board[3]+board[4])) swap(3,4);
+        if(prime(board[3]+board[6])) swap(3,6);
+        if(prime(board[4]+board[5])) swap(4,5);
+        if(prime(board[4]+board[7])) swap(4,7);
+        if(prime(board[5]+board[8])) swap(5,8);
+        if(prime(board[6]+board[7])) swap(6,7);
+        if(prime(board[7]+board[8])) swap(7,8);
+        f++;
+    }
+    
+}
+
+int main() {
+	r=0;
+	q[r]=123456789;
+	r++;
+	d[12345678] =1;
+	create();
+	int t;
+	scanf("%d",&t);
+	while(t--){
+	    int st=0;
+	    for(int i=0;i<9;i++){
+	        int temp;
+	        scanf("%d",&temp);
+	        st = st*10 + temp;
+	    }
+	    printf("%d\n", d[st/10]-1);
+	}
+	
+}
+
