@@ -1,0 +1,28 @@
+//Count vowel permutation //Leetcode
+#define mod 1000000007LL
+class Solution {
+public:
+    int countVowelPermutation(int n) {
+        if(n==0) return 0;
+        
+        int prev_a=1,prev_e=1,prev_i=1,prev_o=1,prev_u=1;
+        int curr_a,curr_e,curr_i,curr_o,curr_u;
+        for(int i=2;i<=n;i++)
+        {
+            curr_a=( (prev_e)%mod + (prev_i)%mod + (prev_u)%mod )%mod;
+            curr_e=((prev_a)%mod + (prev_i)%mod)%mod;
+            curr_i=((prev_e)%mod + (prev_o)%mod )%mod;
+            curr_o=(prev_i)%mod;
+            curr_u=((prev_i)%mod + (prev_o)%mod )%mod;
+            
+            
+            prev_a=curr_a;
+            prev_e=curr_e;
+            prev_i=curr_i;
+            prev_o=curr_o;
+            prev_u=curr_u;
+        }
+        
+        return ((prev_a)%mod + (prev_e)%mod + (prev_i)%mod + (prev_o)%mod + (prev_u)%mod )%mod;
+    }
+};
