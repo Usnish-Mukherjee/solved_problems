@@ -1,0 +1,83 @@
+		                               //shubham arya
+		                               //NIT Patna
+                                       //Samsung Airplane (bomb) problem
+                                       //using bomb as 0 and 2 as reducing 1 point (using bomb only once)
+#include <bits/stdc++.h>
+#define ll long long int
+#define mp make_pair
+#define pi pair<ll,ll>
+using namespace std;
+const ll MAX=1e13;
+const ll MOD=1e9+7;
+int n,a[20][5];
+int fans=-1;
+
+void bomb(int i,int j,int b,int b1,int b2,int b3,int b4,int b5,int sum)
+{
+	int tb=b1+b2+b3+b4+b5; 
+	if(a[i][j]==1) sum++;
+	else if(a[i][j]==2 && tb==0) sum--;
+
+	if(i==0 || (a[i][j]==0 && tb==0))
+	{
+		fans=max(fans,sum); return;
+	}
+  
+	if(i-1>=0 && j-1>=0) bomb(i-1,j-1,b,0,b1,b2,b3,b4,sum);          //without bomb
+	if(i-1>=0) bomb(i-1,j,b,0,b1,b2,b3,b4,sum);                      //without bomb
+	if(i-1>=0 && j+1<5) bomb(i-1,j+1,b,0,b1,b2,b3,b4,sum);           //without bomb
+	if(b==1 && i-1>=0 && j-1>=0) bomb(i-1,j-1,0,1,b1,b2,b3,b4,sum);  //using bomb
+	if(b==1 && i-1>=0) bomb(i-1,j,0,1,b1,b2,b3,b4,sum);              //using bomb
+	if(b==1 && i-1>=0 && j+1<5) bomb(i-1,j+1,0,1,b1,b2,b3,b4,sum);   //using bomb
+}
+
+int main()
+{
+	std::ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		cin>>n;
+		for(int i=0;i<n;i++)
+			for(int j=0;j<5;j++)
+				cin>>a[i][j];
+		for(int i=0;i<5;i++)
+			a[n][i]=3;   //because here 0 is the terminating point,so we choose 3 as starting point
+		bomb(n,2,1,0,0,0,0,0,0);
+        cout<<fans<<endl;
+        fans=-1;
+	}
+	return 0;
+}
+
+/*Test cases
+-------------
+3   //tc
+7   // no. of rows
+1 2 0 0 1
+2 0 0 1 0
+0 1 2 0 1
+1 0 0 2 1
+0 2 1 0 1
+0 1 2 2 2
+1 0 1 1 0
+6   //output
+5
+1 1 0 0 0
+1 2 2 2 1
+1 1 2 2 1
+2 2 2 1 2
+2 2 0 2 0
+3
+6
+2 2 2 2 2
+0 0 0 0 0
+0 0 2 0 0
+2 0 0 0 2
+0 0 0 0 0
+1 2 2 2 1
+-1
+----------
+*/
