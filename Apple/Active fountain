@@ -1,6 +1,11 @@
- int minTaps(int n, vector<int>& ranges) {
-        vector<int>jump(n+1,0);
-        for(int i=0;i<=n;i++)
+#include <bits/stdc++.h>
+using namespace std;
+int minTaps(int n, vector<int>& ranges1) {
+       vector<int>ranges(n);
+       for(int i=0;i<n;i++)
+        ranges[i]=ranges1[i+1];
+        vector<int>jump(n,0);
+        for(int i=0;i<n;i++)
         {
             int l=max(0,i-ranges[i]);
             int r=min(n,i+ranges[i]);
@@ -21,3 +26,16 @@
         }
         return -1;
     }
+int main()
+{
+    int n;
+    cin>>n;
+    vector<int>a(n+1);
+    a[0]=1000;
+    for(int i=1;i<=n;i++)
+    {
+        cin>>a[i];
+    }
+    cout<<minTaps(n,a);
+    return 0;
+}
