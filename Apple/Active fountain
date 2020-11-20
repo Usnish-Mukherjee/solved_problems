@@ -1,0 +1,23 @@
+ int minTaps(int n, vector<int>& ranges) {
+        vector<int>jump(n+1,0);
+        for(int i=0;i<=n;i++)
+        {
+            int l=max(0,i-ranges[i]);
+            int r=min(n,i+ranges[i]);
+            jump[l]=max(jump[l],r-l);
+        }
+        
+        int farthest=0,cur_end=0,jumps=0;
+        for(int i=0;i<=n;i++)
+        {
+            farthest=max(farthest,i+jump[i]);
+            if(i==cur_end)
+            {
+                jumps++;
+                cur_end=farthest;
+                if(cur_end>=n)
+                    return jumps;
+           }
+        }
+        return -1;
+    }
