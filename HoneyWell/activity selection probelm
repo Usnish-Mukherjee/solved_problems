@@ -38,3 +38,56 @@ int main()
 	cout<<activity_selection(jobs,n);
 	return 0;
 }
+
+*
+*
+*
+*
+
+
+
+
+
+
+
+using namespace std;
+
+int main() {
+	//code
+	int t;
+	cin>>t;
+	while(t--)
+	{
+	    int n;
+	    cin>>n;
+	int s[n],f[n];
+	for(int i=0;i<n;i++)
+	cin>>s[i];
+	for(int i=0;i<n;i++)
+	cin>>f[i];
+	
+	priority_queue<pair<pair<int,int>,int>,vector<pair<pair<int,int>,int>>,
+	greater<pair<pair<int,int>,int>>>q;
+	for(int i=0;i<n;i++)
+	{
+	    q.push({{f[i],s[i]},i+1});
+	}
+	
+	int finish;
+	cout<<q.top().second<<' ';
+
+	finish=q.top().first.first;
+	q.pop();
+	while(!q.empty())
+	{
+	    pair<pair<int,int>,int>p=q.top(); q.pop();
+	    if(p.first.second>=finish)
+	    {
+	        cout<<p.second<<" ";
+	        finish=p.first.first;
+	    }
+	}
+	cout<<endl;
+	}
+	return 0;
+}
