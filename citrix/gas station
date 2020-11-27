@@ -1,0 +1,26 @@
+int canCompleteCircuit(vector<int>& A, vector<int>& B) {
+    int initial_gas=0;
+    int count=0;
+    int start=0;
+    int n=A.size();
+    int i=0;
+    while(start<n)
+    {
+        initial_gas+=A[i];
+        while(initial_gas>=B[i])
+        {
+            initial_gas-=B[i];
+            i++;
+            i%=n;
+            count++;
+            if(count==n)
+            return start;
+            initial_gas+=A[i];
+        }
+        start++;
+        i=start;
+        count=0;
+        initial_gas=0;
+    }
+    return -1;
+}
