@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+
+long solve(long n, long k)
+{
+    if(n == 1)
+        return 1;
+    else
+        return (solve(n-1, k) + k)%n+1;
+}   
+
+int main() {
+	
+	long n,k; cin >> n >> k; 
+	
+	cout << solve(n,k) << endl;
+	
+	return 0;
+}
+
+
+
+public int lastRemaining(int n) {
+        return n == 1 ? 1 : 2 * (1 + n / 2 - lastRemaining(n / 2));
+    }
+    
+    
+public int lastRemaining(int n) {
+        Stack<Integer> stack = new Stack<>();
+        while (n > 1) {
+            n /= 2;
+            stack.push(n);
+        }
+        int result = 1;
+        while (!stack.isEmpty()) {
+            result = 2 * (1 + stack.pop() - result);
+        }
+        return result;
+    }
